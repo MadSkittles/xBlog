@@ -1,0 +1,131 @@
+{% load custom_markdown %}
+<div class="span3" id="idlist">
+    <!--category-->
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4 class="">文章分类</h4>
+            <li><a href="/" title="全部共{{ sum }}篇文章" data-no-instant>全部文章<span class="pull-right">[{{ sum }}]</span></a>
+            </li>
+            {% for catagory in catagories %}
+                <li><a href="{% url 'catagories' catagory_name=catagory.catagory_name %}"
+                       title="该分类共{{ catagory.article_quan }}篇文章">{{ catagory.catagory_name }}<span
+                        class="pull-right">[{{ catagory.article_quan }}]</span></a></li>
+            {% endfor %}
+            {% if catagories|length > 10 %}
+                <li id="display_categories">
+                    <center><a class="icon-chevron-down"></a></center>
+                </li>
+            {% endif %}
+        </ul>
+    </div><!--category-->
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4>阅读排行</h4>
+            {% for article in rank %}
+                <li><a href="{% url 'detail' article_id=article.id %}"
+                       title="共阅读{{ article.readrecord_set.all|length }}次，点击查看详细内容">{{ article.title }}<span
+                        class="pull-right">[{{ article.readrecord_set.all|length }}]</span></a></li>
+            {% endfor %}
+        </ul>
+    </div><!--hot article-->
+    <div class="well">
+        <iframe width="100%" height="350" class="share_self" frameborder="0" scrolling="no"
+                src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=350&fansRow=2&ptype=0&speed=100&skin=10&isTitle=1&noborder=0&isWeibo=1&isFans=0&uid=3027936487&verifier=347186ab&dpc=1"></iframe>
+    </div><!--weiboshow-->
+
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4>阅读动态</h4>
+            {% for record in records %}
+                <li>
+                    <blockquote><a href="{% url 'detail' article_id=record.article.id %}"
+                                   title="点击查看详细内容">{{ record.article.title }}</a>
+                        <small>{{ record.visitor.nickname }}{{ record.visitor.ip_address|ip_protect }}[{{ record.visitor.city }}] @{{ record.date_time|date:"Y-m-d H:i" }}</small>
+                    </blockquote>
+                </li>
+            {% endfor %}
+        </ul>
+    </div><!--actions-->
+
+
+    <div class="well">
+        <ul class="nav nav-list">
+            <small style="float:right;color:#fff;">共{{ record_sum }}条评论</small>
+            <h4>最新评论</h4>
+            {% for comment in comments %}
+                <li>
+                    <blockquote><a href="{% url 'detail' article_id=comment.article_id.id %}#comment-bottom" title="{{ comment.article_id.title }}">{{ comment.content|sub_content:20 }}</a>
+                        <small>{{ comment.visitor.nickname }}{{ comment.visitor.ip_address|ip_protect }}[{{ comment.visitor.city }}] @{{ comment.submit_time|date:"Y-m-d H:i" }}</small>
+                    </blockquote>
+                </li>
+            {% endfor %}
+        </ul>
+    </div><!--comments-->
+
+
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4 class="">文章归档</h4>
+            {% for archive in archives %}
+                {% if forloop.counter <= 10 %}
+                    <li><a href="{% url 'archives' archive_name=archive.archive_name %}"
+                           title="共{{ archive.article_quan }}篇文章">{{ archive.archive_name }}<span
+                            class="pull-right">[{{ archive.article_quan }}]</span></a></li>
+                {% else %}
+                    <li class="hide"><a href="{% url 'archives' archive_name=archive.archive_name %}"
+                                        title="共{{ archive.article_quan }}篇文章">{{ archive.archive_name }}<span
+                            class="pull-right">[{{ archive.article_quan }}]</span></a></li>
+                {% endif %}
+            {% endfor %}
+            {% if archives|length > 10 %}
+                <li id="display_archives">
+                    <center><a class="icon-chevron-down"></a></center>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <!--archive-->
+
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4>友情链接</h4>
+            {% for link in links %}
+                {% if forloop.counter <= 10 %}
+                    <li><a href="{{ link.link }}" title="" target="_blank" data-no-instant>{{ link.title }}</a></li>
+                {% else %}
+                    <li class="hide"><a href="{{ link.link }}" title="" target="_blank"
+                                        data-no-instant>{{ link.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if links|length > 10 %}
+                <li id="display_links">
+                    <center><a class="icon-chevron-down"></a></center>
+                </li>
+            {% endif %}
+        </ul>
+    </div><!--links-->
+
+    <div class="well">
+        <ul class="nav nav-list">
+            <h4>访客统计</h4>
+            <li>
+                <a href="javascript:void(0)" id="today-visitors" title="点击显示今日访客"
+                   onclick="today_visitors('{{ csrf_token }}')">今日访客</a>
+                <ol reversed>
+                </ol>
+            </li>
+            <li>
+                <a href="javascript:void(0)" id="online-visitors" title="点击显示在线访客"
+                   onclick="online_visitors('{{ csrf_token }}')">在线访客</a>
+                <ol reversed>
+                </ol>
+            </li>
+            <li>
+                <a href="javascript:void(0)" id="visit-count" title="网站访问总次数"
+                   onclick="visit_count('{{ csrf_token }}')">访问次数</a>
+                <ul>
+                </ul>
+            </li>
+        </ul>
+    </div><!--visitor-->
+</div><!--span3-->

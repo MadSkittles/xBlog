@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>博客首页 | 大鹌鹑的博客</title>
+    <meta charset="utf-8">
+    <meta name="author" content="大鹌鹑">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="大鹌鹑, ">
+    <link rel="icon" href="/static/img/anchun.jpg" type="image/x-icon">
+    <script type="text/javascript" src="/static/js/stats.js" charset="UTF-8"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/buttons.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/code.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+    <link rel="stylesheet" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+</head>
+
+<body>
+<div class="container">
+    {% include 'xBlog/head.html' %}
+    <div class="row-fluid">
+        {% if keyword %}
+        <div class="alert alert-info" align="center" style="color:#ffffff;">
+            <a class="close" data-dismiss="alert" data-no-instant>×</a>
+            <h4>关于 {{ keyword }} 的文章共 {{ result_num }} 篇</h4>
+        </div>
+        {% endif %}
+    </div>
+
+
+    {% block content %}
+    {% endblock %}
+
+    <hr>
+    <div class="footer">
+        <p class="pull-right"><a href="#" data-no-instant>回到顶端</a></p>
+
+        <p>联系邮箱：<a href='mailto:likanwen@icloud.com'>likanwen@icloud.com</a> <a href="{% url 'alipay' %}" target="_blank"
+                                                                                data-no-instant><img
+                src="/static/img/donate_me.png" alt="支付宝捐赠" width="85"/></a></p>
+
+        <p>Copyright ©2011-2016 All rights reserved. Powered by <a href="{% url 'resume' %}" target="_blank" data-no-instant>Python大鹌鹑</a>.
+        </p>
+    </div><!--footer-->
+</div><!--container-->
+<!--[if lt IE 9]>
+            <script type="text/javascript">
+                alert("重要提示：\n大鹌鹑建议您使用Chrome或Firefox等主流浏览器访问本博客。\n您使用此非主流浏览器畅游互联网对您的身心健康无益请谨慎使用！");
+            </script>
+            <![endif]-->
+<!-- broken pip??
+<script src="http://blogstaticfiles.qiniudn.com/static/js/instantclick.js" data-no-instant></script>
+<script data-no-instant>InstantClick.init(50);</script>
+-->
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/application.js"></script>
+</body>
+</html>

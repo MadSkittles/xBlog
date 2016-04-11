@@ -1,0 +1,28 @@
+{% extends "xBlog/base.html" %}
+{% block content %}
+    <div class="row-fluid" align="center">
+        <div class="well">
+            <div class="row-fluid" id="alipay_head">
+                <div class="offset4 span4 alert alert-info">
+                    <h4>支付宝捐赠</h4>
+                </div>
+            </div>
+            <div class="row-fluid" id="alipay_qr">
+                <div class="offset4 span4" id="alipay">
+                    <img src="/static/img/alipay.jpg" width="350px"/>
+                </div>
+            </div>
+            <div class="row-fluid" id="alipay_thx">
+                <div class="offset4 span4" style="margin-top:15px;">
+                    如果您觉得从我的分享中得到了帮助，并且希望我的博客持续发展下去，那就用你的支付宝扫一扫二维码捐赠本站吧，谢谢！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#alipay_head').addClass('animated swing');
+        $('#sitename').addClass('animated lightSpeedIn');
+        $('#alipay').addClass('animated rotateIn');
+    </script>
+{% endblock %}
