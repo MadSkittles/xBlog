@@ -1,14 +1,16 @@
-from django.shortcuts import render_to_response, render
 from django.http import Http404, JsonResponse
-from .models import *
+from django.shortcuts import render_to_response, render
 from django.utils import timezone
+
+from .models import *
 # from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.db.models import Q
 from .IpInfo import *
-from django.forms.models import model_to_dict
 from django.core.cache import cache
+from .MailReminder import send_mail
+import threading
 
 
 # Create your views here.
@@ -153,7 +155,12 @@ def submit_comment(request, article_id):
         reply_to_who_id = request.POST.get('reply_to_who_id')
 
         if reply_to_who_id != 'null':
-            reply_to_comment = Comment.objects.get(pk=reply_to_who_id)
+            reply_to_comment = Comment.objects.select_related().get(pk=reply_to_who_id)
+
+            if reply_to_comment.visitor.email:
+                threading.Thread(target=send_mail,
+                                 args=(visitor, reply_to_comment.visitor, reply_to_comment.article_id)).start()
+
             reply_to = '回复 #' + str(reply_to_comment.comment_id) + ' ' + reply_to_comment.visitor.nickname + ip_protect(
                 reply_to_comment.visitor.ip_address) + '[' + reply_to_comment.visitor.city + ']'
         else:
@@ -179,7 +186,7 @@ def submit_comment(request, article_id):
         comment.save()
 
         result = dict()
-        result['author'] = visitor.nickname
+        result['author'] = visitor.nickname + ip_protect(visitor.ip_address) + '[' + visitor.city + ']'
         result['id'] = comment.id
         result['author_id'] = comment.visitor.id
         result['url'] = visitor.url
