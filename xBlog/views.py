@@ -1,6 +1,7 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import render_to_response, render
 from django.utils import timezone
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import *
 # from django.contrib.syndication.views import Feed
@@ -14,6 +15,7 @@ import threading
 
 
 # Create your views here.
+@ensure_csrf_cookie
 def home(request):
     if 'keyword' in request.GET:
         keyword = request.GET.get('keyword')
@@ -42,6 +44,7 @@ def home(request):
                               context_instance=RequestContext(request))
 
 
+@ensure_csrf_cookie
 def get_detail(request, article_id):
     ip = request.META['HTTP_X_FORWARDED_FOR'] if 'HTTP_X_FORWARDED_FOR' in request.META else request.META[
         'REMOTE_ADDR']
@@ -76,6 +79,7 @@ def get_detail(request, article_id):
                                'records': records}, context_instance=RequestContext(request))
 
 
+@ensure_csrf_cookie
 def get_tag_list(request, tag_name):
     try:
         tag = Tag.objects.get(tag_name=tag_name)
@@ -93,6 +97,7 @@ def get_tag_list(request, tag_name):
     return render_to_response('xBlog/articles.html', {'post_list': post_list}, context_instance=RequestContext(request))
 
 
+@ensure_csrf_cookie
 def get_archive_list(request, archive_name):
     try:
         archive = Archive.objects.prefetch_related().get(archive_name=archive_name)
@@ -110,6 +115,7 @@ def get_archive_list(request, archive_name):
     return render_to_response('xBlog/articles.html', {'post_list': post_list}, context_instance=RequestContext(request))
 
 
+@ensure_csrf_cookie
 def get_catagory_list(request, catagory_name):
     try:
         catagory = Catagory.objects.prefetch_related().get(catagory_name=catagory_name)

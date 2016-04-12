@@ -1,13 +1,15 @@
-from .models import Visitor
-from .IpInfo import *
-from django.utils import timezone
 from django.core.cache import cache
+from django.utils import timezone
+
+from .IpInfo import *
+from .models import Visitor
 
 
 class VisitorMiddleware:
     def process_request(self, request):
         ip = request.META['HTTP_X_FORWARDED_FOR'] if 'HTTP_X_FORWARDED_FOR' in request.META else request.META[
             'REMOTE_ADDR']
+
         try:
             visitor = Visitor.objects.get(ip_address=ip)
         except Visitor.DoesNotExist:

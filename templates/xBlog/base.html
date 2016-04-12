@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/static/css/buttons.css">
     <link rel="stylesheet" href="/static/css/animate.min.css">
     <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/js.cookie.js"></script>
 </head>
 
 <body>
@@ -25,10 +26,10 @@
     {% include 'xBlog/head.html' %}
     <div class="row-fluid">
         {% if keyword %}
-        <div class="alert alert-info" align="center" style="color:#ffffff;">
-            <a class="close" data-dismiss="alert" data-no-instant>×</a>
-            <h4>关于 {{ keyword }} 的文章共 {{ result_num }} 篇</h4>
-        </div>
+            <div class="alert alert-info" align="center" style="color:#ffffff;">
+                <a class="close" data-dismiss="alert" data-no-instant>×</a>
+                <h4>关于 {{ keyword }} 的文章共 {{ result_num }} 篇</h4>
+            </div>
         {% endif %}
     </div>
 
@@ -40,11 +41,13 @@
     <div class="footer">
         <p class="pull-right"><a href="#" data-no-instant>回到顶端</a></p>
 
-        <p>联系邮箱：<a href='mailto:likanwen@icloud.com'>likanwen@icloud.com</a> <a href="{% url 'alipay' %}" target="_blank"
+        <p>联系邮箱：<a href='mailto:likanwen@icloud.com'>likanwen@icloud.com</a> <a href="{% url 'alipay' %}"
+                                                                                target="_blank"
                                                                                 data-no-instant><img
                 src="/static/img/donate_me.png" alt="支付宝捐赠" width="85"/></a></p>
 
-        <p>Copyright ©2011-2016 All rights reserved. Powered by <a href="{% url 'resume' %}" target="_blank" data-no-instant>Python大鹌鹑</a>.
+        <p>Copyright ©2011-2016 All rights reserved. Powered by <a href="{% url 'resume' %}" target="_blank"
+                                                                   data-no-instant>Python大鹌鹑</a>.
         </p>
     </div><!--footer-->
 </div><!--container-->

@@ -1,5 +1,4 @@
 from .models import *
-from django.db import connection
 
 
 def custom_proc(request):
@@ -11,10 +10,5 @@ def custom_proc(request):
     article_sum = sum([catagory.article_quan for catagory in catagories])
     links = Link.objects.all()
 
-    csrf_token = None
-
-    if 'csrftoken' in request.COOKIES:
-        csrf_token = request.COOKIES['csrftoken']
-
     return {'tags': tags, 'catagories': catagories, 'archives': archives, 'sum': article_sum, 'rank': articles_rank,
-            'links': links, 'csrf_token': csrf_token}
+            'links': links}
